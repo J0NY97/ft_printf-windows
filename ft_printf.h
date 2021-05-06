@@ -6,14 +6,14 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:09:27 by jsalmi            #+#    #+#             */
-/*   Updated: 2021/04/27 11:03:51 by jsalmi           ###   ########.fr       */
+/*   Updated: 2021/05/06 12:34:41 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "../libft-windows/libft.h"
+# include "libft.h"
 # include <stdarg.h>
 
 typedef	struct	s_flags

@@ -10,7 +10,7 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(SRCS)
-	@gcc -c $(SRCS) $(FLAGS) -I ../libft-windows
+	@gcc -c $(SRCS) $(FLAGS) -I ../libft
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
 	@echo "$(NAME) was successfully created."

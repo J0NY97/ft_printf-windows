@@ -53,10 +53,13 @@ char	*put_int(long long int d, t_flags *flags)
 
 char	*put_str(char *d, t_flags *flags)
 {
-	char *new;
-	char *temp;
+	char	*new;
+	char	*temp;
 
-	new = ft_strdup(d);
+	if (d)
+		new = ft_strdup(d);
+	else
+		new = ft_strdup("(null)");
 	if (flags->precision_given != -1)
 	{
 		temp = ft_strndup(new, flags->precision);

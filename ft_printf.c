@@ -25,7 +25,7 @@ int	ft_printf(const char *restrict format, ...)
 	}
 	info->input = ft_strdup(format);
 	info->output = ft_strnew(1);
-	info->flags.specifiers = ft_strdup("diouxXcsf");
+	info->flags.specifiers = ft_strdup("diouxXcsf%");
 	va_start(info->ap, format);
 	input_parser(info);
 	va_end(info->ap);
@@ -48,7 +48,7 @@ char	*ft_sprintf(const char *restrict format, ...)
 		ft_putstr("couldnt malloc info\n");
 	info->input = ft_strdup(format);
 	info->output = ft_strnew(1);
-	info->flags.specifiers = ft_strdup("diouxXcsf");
+	info->flags.specifiers = ft_strdup("diouxXcsf%");
 	va_start(info->ap, format);
 	input_parser(info);
 	va_end(info->ap);
@@ -72,7 +72,7 @@ int	ft_fprintf(int fd, const char *restrict format, ...)
 		ft_putstr("couldnt malloc info\n");
 	info->input = ft_strdup(format);
 	info->output = ft_strnew(1);
-	info->flags.specifiers = ft_strdup("diouxXcsf");
+	info->flags.specifiers = ft_strdup("diouxXcsf%");
 	va_start(info->ap, format);
 	input_parser(info);
 	va_end(info->ap);

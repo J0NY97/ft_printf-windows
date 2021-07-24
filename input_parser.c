@@ -96,25 +96,6 @@ void	flag_parser(va_list *ap, t_flags *flags, const char *format)
 		flags->specifier = format[i];
 }
 
-char	*output_type(va_list *ap, t_flags *flags)
-{
-	char	*new;
-	int		i;
-
-	i = 0;
-	new = specifier_to_string(flags->specifier, ap, flags);
-	apply_flags_to_string(&new, flags);
-	if (flags->specifier == 'x')
-	{
-		while (new[i])
-		{
-			new[i] = ft_tolower(new[i]);
-			i++;
-		}
-	}
-	return (new);
-}
-
 void	input_parser(t_printf *info)
 {
 	int		i;
@@ -126,8 +107,6 @@ void	input_parser(t_printf *info)
 	{
 		if (info->input[i] == '%')
 		{
-			if (info->input[i + 1] && info->input[i + 1] == '%' && (i++))
-				ft_straddchar(&new, info->input[i]);
 			flag_parser(&info->ap, &info->flags, info->input + i + 1);
 			if (info->flags.specifier != 0
 				&& ft_strchr(info->flags.specifiers, info->flags.specifier))

@@ -50,6 +50,7 @@ int				ft_printf(const char *restrict format, ...);
 char			*ft_sprintf(const char *restrict format, ...);
 int				ft_fprintf(int fd, const char *restrict format, ...);
 void			input_parser(t_printf *info);
+char			*output_type(va_list *ap, t_flags *flags);
 char			*put_char(char d);
 char			*put_int(long long int d, t_flags *flags);
 char			*put_str(char *d, t_flags *flags);

@@ -66,8 +66,11 @@ void	apply_flags_to_string(char **new, t_flags *flags)
 	{
 		temp = add_special_chars(*new, flags);
 		ft_strreplace(new, &temp);
-		flags->negativ == 1 ? temp = ft_strjoin("-", *new) : 0;
-		flags->negativ == 1 ? ft_strreplace(new, &temp) : 0;
+		if (flags->negativ == 1)
+		{
+			temp = ft_strjoin("-", *new);
+			ft_strreplace(new, &temp);
+		}
 	}
 	if (flags->width > -1)
 	{
@@ -78,6 +81,7 @@ void	apply_flags_to_string(char **new, t_flags *flags)
 	{
 		temp = add_special_chars(*new, flags);
 		ft_strreplace(new, &temp);
-		flags->negativ == 1 ? *new[0] = '-' : 0;
+		if (flags->negativ == 1)
+			*new[0] = '-';
 	}
 }

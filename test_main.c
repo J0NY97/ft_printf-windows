@@ -34,5 +34,7 @@ int	main(void)
 	ft_printf("\n%#x\n", 4278716424);
 	printf("%#x\n", 4278716424);
 
+	ft_printf("pad with zeros 0 amount of times: %02d\n", 3);
+
 	return (0);
 }

@@ -1,2 +1,2 @@
 #!/usr/bin/bash
-gcc test_main.c libprintf.lib -I ../libft -L ../libft -l libft
+gcc test_main.c -I . -L . -l libprintf -I ../libft -L ../libft -l libft

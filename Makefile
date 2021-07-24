@@ -9,7 +9,7 @@ FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(SRCS)
 	@gcc -c $(SRCS) $(FLAGS) -I ../libft
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)

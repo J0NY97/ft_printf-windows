@@ -14,7 +14,7 @@
 
 char	*specifier_to_string(char type, va_list *ap, t_flags *flags)
 {
-	char *new;
+	char	*new;
 
 	new = NULL;
 	if (type == 'c')
@@ -36,16 +36,18 @@ char	*add_special_chars(const char *old, t_flags *flags)
 	char	*temp;
 	int		set;
 
-	set = 0;
+	set = 1;
 	new = ft_strdup(old);
-	if (flags->plus == 1 && (set = 1))
+	if (flags->plus == 1)
 		temp = ft_strjoin("+", new);
-	else if (flags->hash == 1 &&
-			(flags->specifier == 'x' || flags->specifier == 'X') && (set = 1))
+	else if (flags->hash == 1
+		&& (flags->specifier == 'x' || flags->specifier == 'X'))
 		temp = ft_strjoin("0X", new);
 	else if (flags->hash == 1 && flags->specifier == 'o'
-			&& flags->precision_given == -1 && (set = 1))
+		&& flags->precision_given == -1)
 		temp = ft_strjoin("0", new);
+	else
+		set = 0;
 	if (set == 1)
 		ft_strreplace(&new, &temp);
 	return (new);

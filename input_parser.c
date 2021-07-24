@@ -31,9 +31,9 @@ void	reset_flags(t_flags *flags)
 	flags->negativ = -1;
 }
 
-int		check_flags(const char *format, t_flags *flags, char *flag_chars)
+int	check_flags(const char *format, t_flags *flags, char *flag_chars)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	reset_flags(flags);
@@ -56,7 +56,7 @@ int		check_flags(const char *format, t_flags *flags, char *flag_chars)
 
 void	flag_parser(va_list ap, t_flags *flags, const char *format)
 {
-	int i;
+	int	i;
 
 	i = check_flags(format, flags, "#0- +");
 	while (format[i] && !ft_strchr(flags->specifiers, format[i]))
@@ -118,8 +118,8 @@ void	input_parser(t_printf *info)
 			if (info->input[i + 1] && info->input[i + 1] == '%' && (i++))
 				ft_straddchar(&new, info->input[i]);
 			flag_parser(info->ap, &info->flags, info->input + i + 1);
-			if (info->flags.specifier != 0 &&
-				ft_strchr(info->flags.specifiers, info->flags.specifier))
+			if (info->flags.specifier != 0
+				&& ft_strchr(info->flags.specifiers, info->flags.specifier))
 			{
 				while (info->input[i] != info->flags.specifier)
 					i++;

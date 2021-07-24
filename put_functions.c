@@ -14,7 +14,7 @@
 
 char	*put_char(char d)
 {
-	char *new;
+	char	*new;
 
 	new = (char *)malloc(sizeof(char) + 1);
 	new[0] = d;
@@ -24,8 +24,8 @@ char	*put_char(char d)
 
 char	*put_int(long long int d, t_flags *flags)
 {
-	char *new;
-	char type;
+	char	*new;
+	char	type;
 
 	new = NULL;
 	type = flags->specifier;
@@ -53,10 +53,13 @@ char	*put_int(long long int d, t_flags *flags)
 
 char	*put_str(char *d, t_flags *flags)
 {
-	char *new;
-	char *temp;
+	char	*new;
+	char	*temp;
 
-	new = ft_strdup(d);
+	if (d)
+		new = ft_strdup(d);
+	else
+		new = ft_strdup("(null)");
 	if (flags->precision_given != -1)
 	{
 		temp = ft_strndup(new, flags->precision);
@@ -67,7 +70,7 @@ char	*put_str(char *d, t_flags *flags)
 
 char	*put_float(double d, t_flags *flags)
 {
-	char *new;
+	char	*new;
 
 	if (d < 0)
 	{

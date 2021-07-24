@@ -12,19 +12,20 @@
 
 #include "ft_printf.h"
 
-int		ft_printf(const char *restrict format, ...)
+int	ft_printf(const char *restrict format, ...)
 {
 	t_printf	*info;
 	int			result;
 
-	if (!(info = (t_printf *)malloc(sizeof(t_printf))))
+	info = (t_printf *)malloc(sizeof(t_printf));
+	if (!info)
 	{
 		ft_putstr("couldnt malloc info\n");
 		return (-1);
 	}
 	info->input = ft_strdup(format);
 	info->output = ft_strnew(1);
-	info->flags.specifiers = ft_strdup("diouxXcsf");
+	info->flags.specifiers = ft_strdup("diouxXcsf%");
 	va_start(info->ap, format);
 	input_parser(info);
 	va_end(info->ap);
@@ -42,11 +43,12 @@ char	*ft_sprintf(const char *restrict format, ...)
 	t_printf	*info;
 	char		*result;
 
-	if (!(info = (t_printf *)malloc(sizeof(t_printf))))
+	info = (t_printf *)malloc(sizeof(t_printf));
+	if (!info)
 		ft_putstr("couldnt malloc info\n");
 	info->input = ft_strdup(format);
 	info->output = ft_strnew(1);
-	info->flags.specifiers = ft_strdup("diouxXcsf");
+	info->flags.specifiers = ft_strdup("diouxXcsf%");
 	va_start(info->ap, format);
 	input_parser(info);
 	va_end(info->ap);
@@ -58,18 +60,19 @@ char	*ft_sprintf(const char *restrict format, ...)
 	return (result);
 }
 
-int		ft_fprintf(int fd, const char *restrict format, ...)
+int	ft_fprintf(int fd, const char *restrict format, ...)
 {
 	t_printf	*info;
 	int			result;
 
 	if (fd < 0)
 		return (0);
-	if (!(info = (t_printf *)malloc(sizeof(t_printf))))
+	info = (t_printf *)malloc(sizeof(t_printf));
+	if (!info)
 		ft_putstr("couldnt malloc info\n");
 	info->input = ft_strdup(format);
 	info->output = ft_strnew(1);
-	info->flags.specifiers = ft_strdup("diouxXcsf");
+	info->flags.specifiers = ft_strdup("diouxXcsf%");
 	va_start(info->ap, format);
 	input_parser(info);
 	va_end(info->ap);

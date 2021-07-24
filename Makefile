@@ -1,9 +1,9 @@
 NAME = libprintf.a
-SRCS = ./ft_printf.c \
-	./input_parser.c \
-	./str_modification.c \
-	./special_functions.c \
-	./put_functions.c
+SRCS =	./ft_printf.c\
+		./input_parser.c\
+		./str_modification.c\
+		./special_functions.c\
+		./put_functions.c
 OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 

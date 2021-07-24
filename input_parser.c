@@ -31,9 +31,9 @@ void	reset_flags(t_flags *flags)
 	flags->negativ = -1;
 }
 
-int		check_flags(const char *format, t_flags *flags, char *flag_chars)
+int	check_flags(const char *format, t_flags *flags, char *flag_chars)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	reset_flags(flags);
@@ -54,26 +54,37 @@ int		check_flags(const char *format, t_flags *flags, char *flag_chars)
 	return (i);
 }
 
-void	flag_parser(va_list ap, t_flags *flags, const char *format)
+int	decide_precision(va_list *ap, t_flags *flags, const char *format, int i)
 {
-	int i;
+	int	iter;
+
+	iter = 0;
+	flags->precision = 0;
+	flags->precision_given = 1;
+	if (format[i + 1] == '*')
+	{
+		flags->precision = va_arg(*ap, int);
+		iter++;
+	}
+	else if (ft_isdigit(format[i + 1]))
+	{
+		flags->precision = ft_atoi(&format[i + 1]);
+		iter += ft_nbrlen(flags->precision);
+	}
+	return (iter);
+}
+
+void	flag_parser(va_list *ap, t_flags *flags, const char *format)
+{
+	int	i;
 
 	i = check_flags(format, flags, "#0- +");
 	while (format[i] && !ft_strchr(flags->specifiers, format[i]))
 	{
-		format[i] == '*' && format[i - 1] != '.' ?
-			flags->width = va_arg(ap, int) : 0;
-		if (format[i] == '.')
-		{
-			flags->precision = 0;
-			flags->precision_given = 1;
-			format[i + 1] == '*' ? flags->precision = va_arg(ap, int) : 0;
-			if (ft_isdigit(format[i + 1]))
-			{
-				flags->precision = ft_atoi(&format[i + 1]);
-				i += ft_nbrlen(flags->precision);
-			}
-		}
+		if (format[i] == '*' && format[i - 1] != '.')
+			flags->width = va_arg(*ap, int);
+		else if (format[i] == '.')
+			i += decide_precision(ap, flags, format, i);
 		else if (ft_isdigit(format[i]))
 		{
 			flags->width = ft_atoi(&format[i]);
@@ -83,25 +94,6 @@ void	flag_parser(va_list ap, t_flags *flags, const char *format)
 	}
 	if (ft_strchr(flags->specifiers, format[i]))
 		flags->specifier = format[i];
-}
-
-char	*output_type(va_list *ap, t_flags *flags)
-{
-	char	*new;
-	int		i;
-
-	i = 0;
-	new = specifier_to_string(flags->specifier, ap, flags);
-	apply_flags_to_string(&new, flags);
-	if (flags->specifier == 'x')
-	{
-		while (new[i])
-		{
-			new[i] = ft_tolower(new[i]);
-			i++;
-		}
-	}
-	return (new);
 }
 
 void	input_parser(t_printf *info)
@@ -115,11 +107,9 @@ void	input_parser(t_printf *info)
 	{
 		if (info->input[i] == '%')
 		{
-			if (info->input[i + 1] && info->input[i + 1] == '%' && (i++))
-				ft_straddchar(&new, info->input[i]);
-			flag_parser(info->ap, &info->flags, info->input + i + 1);
-			if (info->flags.specifier != 0 &&
-				ft_strchr(info->flags.specifiers, info->flags.specifier))
+			flag_parser(&info->ap, &info->flags, info->input + i + 1);
+			if (info->flags.specifier != 0
+				&& ft_strchr(info->flags.specifiers, info->flags.specifier))
 			{
 				while (info->input[i] != info->flags.specifier)
 					i++;

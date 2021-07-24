@@ -14,7 +14,7 @@
 
 char	*specifier_to_string(char type, va_list *ap, t_flags *flags)
 {
-	char *new;
+	char	*new;
 
 	new = NULL;
 	if (type == 'c')
@@ -34,19 +34,21 @@ char	*add_special_chars(const char *old, t_flags *flags)
 {
 	char	*new;
 	char	*temp;
-	int		set;
 
-	set = 0;
+	temp = NULL;
 	new = ft_strdup(old);
-	if (flags->plus == 1 && (set = 1))
+	if (flags->hash == 1 && flags->specifier == 'f'
+		&& flags->precision == 0)
+		ft_straddchar(&new, '.');
+	if (flags->plus == 1)
 		temp = ft_strjoin("+", new);
-	else if (flags->hash == 1 &&
-			(flags->specifier == 'x' || flags->specifier == 'X') && (set = 1))
+	else if (flags->hash == 1
+		&& (flags->specifier == 'x' || flags->specifier == 'X'))
 		temp = ft_strjoin("0X", new);
 	else if (flags->hash == 1 && flags->specifier == 'o'
-			&& flags->precision_given == -1 && (set = 1))
+		&& flags->precision_given == -1)
 		temp = ft_strjoin("0", new);
-	if (set == 1)
+	if (temp)
 		ft_strreplace(&new, &temp);
 	return (new);
 }
@@ -60,22 +62,45 @@ void	apply_flags_to_string(char **new, t_flags *flags)
 		temp = specifier_padding(*new, flags);
 		ft_strreplace(new, &temp);
 	}
-	if (flags->zero == -1)
+	temp = add_special_chars(*new, flags);
+	ft_strreplace(new, &temp);
+	if (flags->negativ == 1)
 	{
-		temp = add_special_chars(*new, flags);
-		ft_strreplace(new, &temp);
-		flags->negativ == 1 ? temp = ft_strjoin("-", *new) : 0;
-		flags->negativ == 1 ? ft_strreplace(new, &temp) : 0;
+		if (flags->zero == -1)
+		{
+			temp = ft_strjoin("-", *new);
+			ft_strreplace(new, &temp);
+		}
+		else if (flags->zero == 1)
+			*new[0] = '-';
 	}
 	if (flags->width > -1)
 	{
 		temp = padding(*new, flags);
 		ft_strreplace(new, &temp);
 	}
-	if (flags->zero == 1)
+}
+
+char	*output_type(va_list *ap, t_flags *flags)
+{
+	char	*new;
+	int		i;
+
+	if (flags->specifier == '%')
 	{
-		temp = add_special_chars(*new, flags);
-		ft_strreplace(new, &temp);
-		flags->negativ == 1 ? *new[0] = '-' : 0;
+		new = ft_strdup("%");
+		return (new);
 	}
+	i = 0;
+	new = specifier_to_string(flags->specifier, ap, flags);
+	apply_flags_to_string(&new, flags);
+	if (flags->specifier == 'x')
+	{
+		while (new[i])
+		{
+			new[i] = ft_tolower(new[i]);
+			i++;
+		}
+	}
+	return (new);
 }

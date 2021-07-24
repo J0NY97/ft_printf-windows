@@ -24,7 +24,9 @@ char	*padding(char *str, t_flags *flags)
 	{
 		new = ft_strnew(flags->width);
 		padd_amount = flags->width - ft_strlen(str);
-		if (flags->zero == 1)
+		if (flags->minus == 1)
+			ft_memset(new, ' ', flags->width);
+		else if (flags->zero == 1)
 			ft_memset(new, '0', padd_amount);
 		else
 			ft_memset(new, ' ', flags->width);
